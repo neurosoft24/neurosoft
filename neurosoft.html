@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroSoft Technologies | The Blueprint for Intelligent Innovation</title>
+
+<style>
+  /* --- GLOBAL STYLES --- */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  body {
+    background: radial-gradient(circle at 50% 50%, #0a0f0a 0%, #000 80%);
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* --- LOADER --- */
+  #loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .neon-circle {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    border: 4px solid #00ff99;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite, glow 1.5s ease-in-out infinite alternate;
+  }
+  .loading-text {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #00ff99;
+    animation: flicker 2s infinite alternate;
+  }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  @keyframes glow {
+    0% { box-shadow: 0 0 5px #00ff99; }
+    100% { box-shadow: 0 0 25px #00ff99; }
+  }
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.3; }
+  }
+
+  /* --- HEADER --- */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 60px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0,255,153,0.3);
+  }
+  .logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #00ff99;
+    text-transform: uppercase;
+  }
+  .logo span { color: #fff; font-weight: 400; }
+  nav ul { list-style: none; display: flex; gap: 25px; }
+  nav a {
+    color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s;
+  }
+  nav a:hover, nav a.active {
+    color: #00ff99; text-shadow: 0 0 10px #00ff99;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  canvas#bgCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  .hero h1 span {
+    color: #00ff99;
+    text-shadow: 0 0 20px #00ff99;
+  }
+  .hero p {
+    color: #ccc;
+    font-size: 1.3rem;
+    margin-bottom: 35px;
+  }
+  .btn {
+    background: #00ff99;
+    padding: 12px 30px;
+    border-radius: 50px;
+    color: #000;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .btn:hover {
+    box-shadow: 0 0 20px #00ff99;
+    transform: scale(1.05);
+  }
+
+  /* --- SECTION --- */
+  section {
+    padding: 100px 80px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  section h2 {
+    font-size: 2.4rem;
+    color: #00ff99;
+    margin-bottom: 25px;
+  }
+  section p {
+    color: #bbb;
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.7;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 50px;
+  }
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(0,255,153,0.3);
+    border-radius: 15px;
+    padding: 30px;
+    width: 280px;
+    transition: 0.4s;
+  }
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px rgba(0,255,153,0.4);
+  }
+  .card h3 {
+    color: #00ff99;
+    margin-bottom: 10px;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    text-align: center;
+    padding: 30px;
+    background: #050505;
+    border-top: 1px solid rgba(0,255,153,0.3);
+    color: #999;
+  }
+  footer a { color: #00ff99; }
+
+  @media (max-width: 768px) {
+    header { padding: 20px 30px; }
+    .hero h1 { font-size: 2.4rem; }
+    .card-container { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="neon-circle"></div>
+    <p class="loading-text">Loading NeuroSoft...</p>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">NeuroSoft<span> Technologies</span></div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <canvas id="bgCanvas"></canvas>
+    <div class="hero-content">
+      <h1>Building the Future of <span>AI & Innovation</span></h1>
+      <p>The Blueprint for Intelligent Innovation</p>
+      <a href="#services" class="btn">Explore Our Solutions</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About NeuroSoft</h2>
+    <p>NeuroSoft Technologies is a global AI software powerhouse shaping the future of intelligence, automation, and innovation. We empower companies with solutions in AI, Cloud, and Data Science to create smarter, sustainable futures.</p>
+  </section>
+
+  <!-- Services -->
+  <section id="services">
+    <h2>Our Services</h2>
+    <div class="card-container">
+      <div class="card"><h3>AI Development</h3><p>We build adaptive and self-learning AI systems that evolve with your business needs.</p></div>
+      <div class="card"><h3>Web & App Design</h3><p>Elegant and futuristic digital experiences with precision engineering.</p></div>
+      <div class="card"><h3>Machine Learning</h3><p>Transforming data into intelligence with deep learning and analytics.</p></div>
+      <div class="card"><h3>Automation Systems</h3><p>Intelligent automation to supercharge efficiency and scalability.</p></div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <h2>Our Portfolio</h2>
+    <p>From neural analytics dashboards to AI automation platforms — every NeuraSoft project is a masterpiece of intelligence and design.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Get in Touch</h2>
+    <p>Ready to innovate with us?</p>
+    <p>Email: <a href="mailto:neurosoft24@gmail.com">neurosoft24@gmail.com</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/company/109464715" target="_blank">NeuroSoft Technologies</a></p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 NeuraSoft Technologies | The Blueprint for Intelligent Innovation</p>
+  </footer>
+
+  <script>
+    // Loader fade
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      setTimeout(() => loader.style.display = 'none', 1500);
+    });
+
+    // --- Floating Neural Network Animation ---
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+    let nodes = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      nodes = [];
+      for (let i = 0; i < 80; i++) {
+        nodes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          dx: (Math.random() - 0.5) * 0.7,
+          dy: (Math.random() - 0.5) * 0.7
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00ff99";
+      nodes.forEach(n => {
+        n.x += n.dx;
+        n.y += n.dy;
+        if (n.x < 0 || n.x > canvas.width) n.dx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.dy *= -1;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          let dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (dist < 150) {
+            ctx.strokeStyle = `rgba(0,255,153,${1 - dist / 150})`;
+            ctx.lineWidth = 0.3;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    draw();
+  </script>
+</body>
+</html>
