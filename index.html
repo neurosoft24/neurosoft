@@ -94,10 +94,10 @@
     overflow: hidden;
   }
   canvas#bgCanvas {
-    position: absolute;
+    position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    z-index: 0;
+    z-index: -1;
   }
   .hero-content {
     position: relative;
@@ -175,6 +175,67 @@
     margin-bottom: 10px;
   }
 
+  /* --- CONTACT SECTION --- */
+  #contact {
+    padding: 80px 60px;
+  }
+  .contact-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  .contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #bbb;
+    transition: all 0.3s;
+  }
+  .contact-item:hover {
+    color: #00ff99;
+    transform: translateY(-3px);
+  }
+  .contact-icon {
+    font-size: 1.5rem;
+  }
+  .contact-text {
+    font-size: 1.1rem;
+  }
+  .contact-item a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .whatsapp-btn {
+    background: #25D366;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    margin-top: 10px;
+  }
+  .whatsapp-btn:hover {
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.7);
+    transform: scale(1.05);
+  }
+  .whatsapp-icon {
+    font-size: 1.3rem;
+  }
+
   /* --- FOOTER --- */
   footer {
     text-align: center;
@@ -189,6 +250,8 @@
     header { padding: 20px 30px; }
     .hero h1 { font-size: 2.4rem; }
     .card-container { flex-direction: column; align-items: center; }
+    .contact-info { flex-direction: column; gap: 20px; }
+    #contact { padding: 80px 30px; }
   }
 </style>
 </head>
@@ -197,8 +260,11 @@
   <!-- Loader -->
   <div id="loader">
     <div class="neon-circle"></div>
-    <p class="loading-text">Loading NeuroSoft...</p>
+    <p class="loading-text">Loading NeuroSoft Technologies...</p>
   </div>
+
+  <!-- Neural Network Background -->
+  <canvas id="bgCanvas"></canvas>
 
   <!-- Header -->
   <header>
@@ -216,7 +282,6 @@
 
   <!-- Hero -->
   <section class="hero">
-    <canvas id="bgCanvas"></canvas>
     <div class="hero-content">
       <h1>Building the Future of <span>AI & Innovation</span></h1>
       <p>The Blueprint for Intelligent Innovation</p>
@@ -226,7 +291,7 @@
 
   <!-- About -->
   <section id="about">
-    <h2>About NeuroSoft</h2>
+    <h2>About NeuroSoft Technologies</h2>
     <p>NeuroSoft Technologies is a global AI software powerhouse shaping the future of intelligence, automation, and innovation. We empower companies with solutions in AI, Cloud, and Data Science to create smarter, sustainable futures.</p>
   </section>
 
@@ -244,20 +309,48 @@
   <!-- Portfolio -->
   <section id="portfolio">
     <h2>Our Portfolio</h2>
-    <p>From neural analytics dashboards to AI automation platforms — every NeuraSoft project is a masterpiece of intelligence and design.</p>
+    <p>From neural analytics dashboards to AI automation platforms — every NeuroSoft Technologies project is a masterpiece of intelligence and design.</p>
   </section>
 
   <!-- Contact -->
   <section id="contact">
     <h2>Get in Touch</h2>
     <p>Ready to innovate with us?</p>
-    <p>Email: <a href="mailto:neurosoft24@gmail.com">neurosoft24@gmail.com</a></p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/company/109464715" target="_blank">NeuroSoft Technologies</a></p>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-item">
+          <span class="contact-icon">✉️</span>
+          <span class="contact-text">
+            <a href="mailto:neurosoft24@gmail.com">neurosoft24@gmail.com</a>
+          </span>
+        </div>
+        
+        <div class="contact-item">
+          <span class="contact-icon">🔗</span>
+          <span class="contact-text">
+            <a href="https://www.linkedin.com/company/109464715" target="_blank">LinkedIn</a>
+          </span>
+        </div>
+        
+        <div class="contact-item">
+          <span class="contact-icon">📷</span>
+          <span class="contact-text">
+            <a href="https://www.instagram.com/neurosoft.technologies?igsh=ajgwdWh6bWp6aHRq" target="_blank">Instagram</a>
+          </span>
+        </div>
+      </div>
+      
+      <a href="https://wa.me/923366884835" target="_blank" class="whatsapp-btn">
+        <span class="whatsapp-icon">💬</span>
+        <span>Chat on WhatsApp</span>
+      </a>
+    </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 NeuraSoft Technologies | The Blueprint for Intelligent Innovation</p>
+    <p>© 2025 NeuroSoft Technologies | The Blueprint for Intelligent Innovation</p>
   </footer>
 
   <script>
@@ -276,28 +369,21 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       nodes = [];
-      for (let i = 0; i < 80; i++) {
+      for (let i = 0; i < 120; i++) {
         nodes.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           dx: (Math.random() - 0.5) * 0.7,
-          dy: (Math.random() - 0.5) * 0.7
+          dy: (Math.random() - 0.5) * 0.7,
+          radius: Math.random() * 2 + 1
         });
       }
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#00ff99";
-      nodes.forEach(n => {
-        n.x += n.dx;
-        n.y += n.dy;
-        if (n.x < 0 || n.x > canvas.width) n.dx *= -1;
-        if (n.y < 0 || n.y > canvas.height) n.dy *= -1;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      
+      // Draw connections
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           let dist = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
@@ -311,6 +397,20 @@
           }
         }
       }
+      
+      // Draw nodes
+      nodes.forEach(n => {
+        n.x += n.dx;
+        n.y += n.dy;
+        if (n.x < 0 || n.x > canvas.width) n.dx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.dy *= -1;
+        
+        ctx.fillStyle = "#00ff99";
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
       requestAnimationFrame(draw);
     }
 
